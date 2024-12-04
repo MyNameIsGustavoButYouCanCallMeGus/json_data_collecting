@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Найти данные</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/search.css') }}">
+    <script>
+        function setFile() {
+            const dateSelect = document.getElementById('date1');
+            const selectedOption = dateSelect.options[dateSelect.selectedIndex];
+            const fileInput = document.getElementById('file');
+            fileInput.value = selectedOption.value;
+        }
+    </script>
+</head>
+<body>
+    <h1>Найти данные</h1>
+    <form method="post" onsubmit="setFile()">
+        <label for="date1">Дата:</label>
+        <select name="date1" id="date1" onchange="setFile()">
+            {% for date in dates %}
+                <option value="{{ date.file }}">{{ date.date }}</option>
+            {% endfor %}
+        </select>
+        <input type="hidden" name="file" id="file">
+
+        <label for="grbId">Группа бюджетирования:</label>
+        <input type="text" id="grbId" name="grbId" value="{{ form_data['grbId'] }}"><br><br>
+
+        <label for="katFgrName">Наименование категории доходов/функциональной групы расходов:</label>
+        <input type="text" id="katFgrName" name="katFgrName" value="{{ form_data['katFgrName'] }}"><br><br>
+
+        <label for="klsFpgrName">Наименование класса доходов/функциональной подгруппы расходов:</label>
+        <input type="text" id="klsFpgrName" name="klsFpgrName" value="{{ form_data['klsFpgrName'] }}"><br><br>
+
+        <label for="pklAbpName">Наиемнование подкласса доходов/администратора бюджетной программы расходов:</label>
+        <input type="text" id="pklAbpName" name="pklAbpName" value="{{ form_data['pklAbpName'] }}"><br><br>
+
+        <label for="katoName">Наименовние территориально-административного объекта:</label>
+        <input type="text" id="katoName" name="katoName" value="{{ form_data['katoName'] }}"><br><br>
+
+        <label for="kato">Код согласно классификатору территориально-административных объектов:</label>
+        <input type="text" id="kato" name="kato" value="{{ form_data['kato'] }}"><br><br>
+
+        <input type="submit" value="Искать">
+        <a href="/">Главная страница</a>
+    </form>
+    <h2>Результаты</h2>
+    {% if results %}
+        <table>
+            <tr>
+                <th>grbId</th>
+                <th>grName</th>
+                <th>strId</th>
+                <th>strName</th>
+                <th>katFgr</th>
+                <th>katFgrName</th>
+                <th>klsFpgr</th>
+                <th>klsFpgrName</th>
+                <th>pklAbp</th>
+                <th>pklAbpName</th>
+                <th>katoName</th>
+                <th>kato</th>
+                <th>spkPrg</th>
+                <th>spkPrgName</th>
+                <th>sumrg</th>
+            </tr>
+            {% for entry in results %}
+            <tr>
+                <td>{{ entry.get('grbId') }}</td>
+                <td>{{ entry.get('grName') }}</td>
+                <td>{{ entry.get('strId') }}</td>
+                <td>{{ entry.get('strName') }}</td>
+                <td>{{ entry.get('katFgr') }}</td>
+                <td>{{ entry.get('katFgrName') }}</td>
+                <td>{{ entry.get('klsFpgr') }}</td>
+                <td>{{ entry.get('klsFpgrName') }}</td>
+                <td>{{ entry.get('pklAbp') }}</td>
+                <td>{{ entry.get('pklAbpName') }}</td>
+                <td>{{ entry.get('katoName') }}</td>
+                <td>{{ entry.get('kato') }}</td>
+                <td>{{ entry.get('spkPrg') }}</td>
+                <td>{{ entry.get('spkPrgName') }}</td>
+                <td>{{ entry.get('sumrg') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</body>
+</html>

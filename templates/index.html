@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Сумма затрат и доходов</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <script>
+        function setFile() {
+            const dateSelect = document.getElementById('date1');
+            const selectedOption = dateSelect.options[dateSelect.selectedIndex];
+            const fileInput = document.getElementById('file');
+            fileInput.value = selectedOption.value;
+        }
+    </script>
+</head>
+<body>
+    <h1>Сумма затрат и доходов</h1>
+    <form method="post" onsubmit="setFile()">
+        <label for="date1">Дата:</label>
+        <select name="date1" id="date1" onchange="setFile()">
+            {% for date in dates %}
+                <option value="{{ date.file }}">{{ date.date }}</option>
+            {% endfor %}
+        </select>
+        <input type="hidden" name="file" id="file">
+
+        <label for="grbId">Группа бюджетирования:</label>
+        <input type="text" id="grbId" name="grbId" value="{{ form_data['grbId'] }}"><br><br>
+
+        <label for="katFgr"> Категория доходов/функциональная группа расходов:</label>
+        <input type="text" id="katFgr" name="katFgr" value="{{ form_data['katFgr'] }}"><br><br>
+
+        <label for="klsFpgr">Класс доходов/функциональная подгруппа расходов:</label>
+        <input type="text" id="klsFpgr" name="klsFpgr" value="{{ form_data['klsFpgr'] }}"><br><br>
+
+        <label for="pklAbp">Подкласс доходов/администратор бюджетной программы расходов:</label>
+        <input type="text" id="pklAbp" name="pklAbp" value="{{ form_data['pklAbp'] }}"><br><br>
+
+        <label for="katoName">Наименовние территориально-административного объекта:</label>
+        <input type="text" id="katoName" name="katoName" value="{{ form_data['katoName'] }}"><br><br>
+
+        <label for="kato">Код согласно классификатору территориально-административных объектов:</label>
+        <input type="text" id="kato" name="kato" value="{{ form_data['kato'] }}"><br><br>
+
+        <input type="submit" value="Искать">
+        <a href="/">Главная страница</a>
+    </form>
+    <h2>Результаты</h2>
+    <p>Сумма (млн тенге): {{ total_obz }}</p>
+    {% if katFgrName_list %}
+        <ul>
+        {% for name in katFgrName_list %}
+            <li>{{ name }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

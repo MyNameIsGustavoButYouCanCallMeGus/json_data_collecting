@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+
+</head>
+<body>
+<div class="main_wrap">
+    <div class="main">
+    <h1>Отчет об исполнении бюджета</h1>
+    <p>Выберите услугу:</p>
+</div>
+<div>
+     <a href="{{ url_for('index') }}">Сумма затрат и доходов</a><br>
+    <a href="{{ url_for('search') }}">Найти данные</a><br>
+    <a href="{{ url_for('state') }}">Скачать отчет</a>
+</div>
+</div>
+
+
+
+</body>
+</html>

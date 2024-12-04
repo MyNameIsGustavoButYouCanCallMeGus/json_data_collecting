@@ -1,0 +1,56 @@
+    <!DOCTYPE html>
+    <html lang="en" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Select Region</title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/state.css') }}">
+
+    </head>
+    <body>
+    <div class="container">
+        <h1>Выбор региона</h1>
+        <form action="/generate_report" method="post">
+            <label for="date">Дата:</label>
+            <select name="date" id="date">
+                {% for date in dates %}
+                <option value="{{date.file}}">{{date.date }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="region">Регион:</label>
+            <select name="region" id="region">
+                {% for region in regions %}
+                <option value="{{ region.kato }}">{{ region.name }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="hidden" name="region_name" id="region_name">
+            <input type="hidden" name="file" id="file">
+             <button type="submit" onclick="
+            document.getElementById('region_name').value = document.getElementById('region').options[document.getElementById('region').selectedIndex].text;
+            document.getElementById('file').value = document.getElementById('date').value;
+    ">Скачать отчет</button>
+            <a href="/">Главная страница</a>
+        </form><br>
+    </div>
+
+    <div class="container">
+        <form action="/generate_gos" method="post">
+            <label for="date1">Дата:</label>
+            <select name="date1" id="date1">
+                {% for date in dates %}
+                <option value="{{ date.file }}">{{ date.date }}</option>
+                {% endfor %}
+            </select>
+            <input type="hidden" name="file_gos" id="file_gos">
+            <label>Исполнение Государственного бюджета</label>
+            <button type="submit" onclick="
+                document.getElementById('file_gos').value = document.getElementById('date1').value;
+            ">Скачать отчет</button>
+        </form>
+    </div>
+
+    </body>
+    </html>
